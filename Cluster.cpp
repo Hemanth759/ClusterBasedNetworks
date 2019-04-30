@@ -413,6 +413,7 @@ int runCluster2LayerSimulation(struct sensor network[], double rate)
     int rounds = 0;
     vector<double> avgEnerys;
 
+    saveNetworkStatus(network, "cluster2LayerState0.txt");
     int deadHeads = 0;
     while(deadHeads != 20)
     {
@@ -496,6 +497,10 @@ int runCluster2LayerSimulation(struct sensor network[], double rate)
         // cout << "DeadHeads : " << deadHeads << endl;
         avgEnerys.push_back(avarageEnery(network));
         ++rounds;
+        if(rounds == 150000)
+            saveNetworkStatus(network, "cluster2LayerState1");
+        if(rounds == 200000)
+            saveNetworkStatus(network, "cluster2LayerState2.txt");
     }
     ofstream stats;
     stats.open("cluster2LayerSimulationAvgEnergies.txt");
