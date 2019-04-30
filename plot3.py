@@ -3,14 +3,11 @@ import os
 from pylab import *
 import numpy as np
 
-ext = "State0"
+ext = "State2"
 
-data = ["direct","cluster","cluster2Layer"]
+data = ["cluster"]
 
 Direct = []
-Leach = []
-Modified = []
-x_axis = []
 #change directory to your directory which can be found out using pwd command on terminal of linux OS
 DIR = "D:/Studies/Sem-4/FCOMM/Project/My proj/"
 for name in data:
@@ -21,46 +18,39 @@ for name in data:
                 x = float(line.split()[0])
                 y = float(line.split()[1])
                 dead = float(line.split()[2])
-                if name == "direct":
-                    Direct.append([x,y,dead])
+                if (x == None or y == None or dead == None):
+                    print('Error accured')
                 if name == "cluster":
-                    Leach.append([x,y,dead])
-                if name == "cluster2Layer":
-                    Modified.append([x,y,dead])
+                    Direct.append([x,y,dead])
 
 
+x_axisActive = []
+y_axisActive = []
 
-size = max(len(Direct), len(Leach))
-size = max(len(Modified), size)
+x_axisDead = []
+y_axisDead = []
 
+size = len(Direct)
+for i in range(0,size):
+    if (Direct[i][2] == 0):
+        x_axisActive.append(Direct[i][0])
+        y_axisActive.append(Direct[i][1])
+    else:
+        x_axisDead.append(Direct[i][0])
+        y_axisDead.append(Direct[i][1])
+    
 #print size
+# print(len(x_axisActive))
+# print(len(y_axisActive))
 
 #size = len(Modified) + 100000
-for i in range(0,size):
-	x_axis.append(i)
 
-
-zero = size - len(Direct)
-for i in range(0,zero):
-	Direct.append(0)
-
-if len(Leach) < len(Modified):
-	zero = size - len(Leach)
-	for i in range(0,zero):
-		Leach.append(0)
-
-if len(Leach) > len(Modified):
-        zero = size - len(Modified)
-        for i in range(0,zero):
-                Modified.append(0)
-
-plot(x_axis, Direct, '-r', label='direct')
-plot(x_axis, Leach, '-b', label='cluster head')
-plot(x_axis, Modified, '-g', label='cluster with 2 Layers')
-
-
-xlabel('rounds')
-ylabel('avg_energy_ntwk')	
+# plot(x_axisActive, y_axisActive, '-r', label='Active')
+# plot(x_axisActive, y_axisActive, '-r', label='Dead')
+plt.scatter(x_axisActive,y_axisActive, c='blue')
+plt.scatter(x_axisDead,y_axisDead, c='red')
+xlabel('x-axis')
+ylabel('y-axis')	
 legend()
 show()
 
