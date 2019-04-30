@@ -504,6 +504,7 @@ int runCluster2LayerSimulation(struct sensor network[], double rate)
         stats << avgEnerys[i] << endl;
     }
     stats.close();
+    return rounds;
 }
 
 int main() 
