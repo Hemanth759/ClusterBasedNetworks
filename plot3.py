@@ -3,7 +3,7 @@ import os
 from pylab import *
 import numpy as np
 
-ext = "SimulationAvgEnergies"
+ext = "State0"
 
 data = ["direct","cluster","cluster2Layer"]
 
@@ -18,13 +18,15 @@ for name in data:
         if file.find(name + ext) >= 0 and file.endswith(".txt"):
             fname = DIR + '/' + file
             for line in open(fname).readlines():
-                value = float(line.split()[0])
+                x = float(line.split()[0])
+                y = float(line.split()[1])
+                dead = float(line.split()[2])
                 if name == "direct":
-                    Direct.append(value * 100)
+                    Direct.append([x,y,dead])
                 if name == "cluster":
-                    Leach.append(value * 100)
+                    Leach.append([x,y,dead])
                 if name == "cluster2Layer":
-                    Modified.append(value * 100)
+                    Modified.append([x,y,dead])
 
 
 
